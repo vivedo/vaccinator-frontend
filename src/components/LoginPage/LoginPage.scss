@@ -1,0 +1,18 @@
+.LoginPage {
+  .login-form {
+    margin-top: 60px;
+
+    header {
+      text-align: center;
+
+      .logo {
+        width: 40%;
+        display: inline-block;
+      }
+    }
+
+    button {
+      width: 100%;
+    }
+  }
+}

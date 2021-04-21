@@ -1,0 +1,29 @@
+@import '../../variables';
+
+.DashboardPage {
+  ul.listings {
+    list-style-type: none;
+    padding: 0;
+
+    a {
+      color: inherit;
+      text-decoration: inherit;
+      display: block;
+      transition: all 125ms ease-in-out;
+      font-size: 20px;
+      line-height: 32px;
+      font-weight: bold;
+
+      small {
+        margin-left: 5px;
+        font-style: italic;
+      }
+
+      &:hover {
+        background-color: $primary;
+        color: white;
+        padding-left: 20px;
+      }
+    }
+  }
+}

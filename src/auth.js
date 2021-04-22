@@ -1,5 +1,6 @@
 import React, {createContext, useContext, useState} from "react";
 import globals from './globals';
+import {useSessionStorage} from "./persistentstorages";
 
 const authContext = createContext()
 
@@ -17,7 +18,7 @@ export function useAuth() {
 }
 
 function useProvideAuth() {
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useSessionStorage('auth', null);
 
     const signin = (data, cb) => {
         if(typeof cb !== 'function') cb = () => {}

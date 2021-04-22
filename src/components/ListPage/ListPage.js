@@ -4,13 +4,14 @@ import {useParams} from "react-router"
 import globals from "../../globals";
 import DashboardStats from "../DashboardStats/DashboardStats";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import { faCheck } from '@fortawesome/free-solid-svg-icons'
+import { faCheck, faSpinner } from '@fortawesome/free-solid-svg-icons'
 import KeyboardScanner from "../KeyboardScanner/KeyboardScanner";
 
 const ListPage = () => {
     const {id} = useParams()
     const [list, setList] = useState()
     const [entries, setEntries] = useState([])
+    const [loadingEntries, setLoadingEntries] = useState(false)
 
     useEffect(() => {
         loadListData()
@@ -37,6 +38,7 @@ const ListPage = () => {
     }
 
     function loadEntriesData() {
+        setLoadingEntries(true)
         fetch(`${globals.API_URL}/listings/${id}/entries`, {
         })
             .then(res => res.json())
@@ -51,12 +53,28 @@ const ListPage = () => {
             .catch(err => {
                 console.log(err)
             })
+            .finally(() => {
+                setLoadingEntries(false)
+            })
+    }
+
+    function confirmCode(entry) {
+
+        fetch(`http://localhost:3200/entries/${entry.entry_id}/scan`, {
+            method: 'POST'
+        })
+            .then(res => res.json())
+            .then(res => {
+                if(res.status)
+                    loadEntriesData()
+            })
+            .catch(err => console.error(err))
     }
 
 
     return (
         <div className="ListPage">
-            <KeyboardScanner entries={entries}/>
+            <KeyboardScanner entries={entries} onConfirm={confirmCode}/>
 
             <div className="container">
                 {list && (
@@ -101,8 +119,14 @@ const ListPage = () => {
                                 </tr>
                             ))}
                             </tbody>
-
                         </table>
+
+                        {loadingEntries && (
+                            <div className="loading">
+                                <FontAwesomeIcon icon={faSpinner} pulse />
+                                <span>Carico...</span>
+                            </div>
+                        )}
                     </div>
                 )}
             </div>

@@ -61,6 +61,7 @@ const KeyboardScanner = (props) => {
     }
 
     function confirm() {
+        props.onConfirm(entry)
         setCode('')
         setDisplayModal(false)
     }

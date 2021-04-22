@@ -2,10 +2,16 @@ import React, {useState} from 'react';
 import './UploadPage.scss';
 import globals from "../../globals";
 import {Link} from "react-router-dom";
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons'
+
 
 const UploadPage = () => {
-    const [loading, setLoading] = useState(false);
-    const [done, setDone] = useState(null);
+    const [loading, setLoading] = useState(false)
+    const [done, setDone] = useState(null)
+
+    const [formListing, setFormListing] = useState(null)
+    const [formReport, setFormReport] = useState(null)
 
     const doUpload = (event) => {
         event.preventDefault()
@@ -25,6 +31,7 @@ const UploadPage = () => {
                     setLoading(false)
                     setDone({success: true, listing: data.get('listing')})
                 } else {
+                    setLoading(false)
                     setDone({success: false})
                 }
             })
@@ -43,15 +50,22 @@ const UploadPage = () => {
                     <div className="form-group">
                         <label htmlFor="listingName">Nome lista</label>
                         <input type="text" className="form-control" id="listingName"
-                               placeholder="Inserisci nome lista" name="listing" readOnly={loading}/>
+                               placeholder="Inserisci nome lista" name="listing" readOnly={loading} required={true}
+                               onChange={(e) => {setFormListing(e.target.value)}}/>
                     </div>
                     <div className="form-group">
                         <label htmlFor="exampleInputFile">Carica report</label>
-                        <input type="file" className="form-control-file" id="reportFile" name="report" readOnly={loading}/>
+                        <input type="file" className="form-control-file" id="reportFile" name="report" readOnly={loading} required={true}
+                               onChange={(e) => {setFormReport(e.target.value)}}/>
                         <small id="fileHelp" className="form-text text-muted">Sono supportati solo i file report in formato PDF</small>
                     </div>
-                    <button type="submit" className="btn btn-primary" disabled={loading}>Carica</button>
-                    {loading && (<span>Caricamento...</span>)}
+                    <button type="submit" className="btn btn-primary" disabled={loading || !formListing || !formReport}>Carica</button>
+                    {loading && (
+                        <div className="loading">
+                            <FontAwesomeIcon icon={faSpinner} pulse />
+                            <span>Carico...</span>
+                        </div>
+                    )}
 
                     {done && (done.success ? (
                         <div className="alert alert-success">

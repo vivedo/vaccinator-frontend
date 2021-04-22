@@ -17,7 +17,7 @@ const DashboardPage = () => {
             <div className="container">
                 <h1>Dashboard</h1>
 
-                <DashboardStats stats={stats} showListings={true}/>
+                <DashboardStats stats={{...stats, listings: listings.length}} showListings={true}/>
 
                 <h2>Liste</h2>
 
@@ -51,6 +51,14 @@ const DashboardPage = () => {
                         ...l,
                         insertion_date: new Date(l.insertion_date)
                     })))
+                }
+            })
+
+        fetch(`${globals.API_URL}/listings/stats`)
+            .then(res => res.json())
+            .then(res => {
+                if(res.status) {
+                    setStats(res.data)
                 }
             })
     }

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import './LoginPage.scss'
 import {useHistory} from "react-router-dom"
 import {useAuth} from "../../auth"
@@ -7,8 +7,10 @@ import HFNLogo from './hfn.png'
 const LoginPage = () => {
     const history = useHistory()
     const auth = useAuth()
+    const [loginErrorCode, setLoginErrorCode] = useState(null)
 
     const doLogin = (event) => {
+        setLoginErrorCode(null)
         event.preventDefault()
         const data = new FormData(event.target)
 
@@ -16,6 +18,9 @@ const LoginPage = () => {
             (res) => {
                 if(res.success)
                     history.replace('/dashboard')
+                else {
+                    setLoginErrorCode(res.error.code)
+                }
             });
     }
 
@@ -44,6 +49,18 @@ const LoginPage = () => {
                             <button className="btn btn-primary">Login</button>
                         </form>
                     </div>
+
+                    {loginErrorCode === 'NETWORK_ERROR' && (
+                        <div className="alert alert-danger">
+                            <strong>Errore di Rete</strong> Controllare la connessione e riprovare, altrimenti contattare l'assistenza
+                        </div>
+                    )}
+
+                    {loginErrorCode === 'LOGIN_ERROR' && (
+                        <div className="alert alert-danger">
+                            Credenziali errate
+                        </div>
+                    )}
                 </div>
             </div>
         </div>

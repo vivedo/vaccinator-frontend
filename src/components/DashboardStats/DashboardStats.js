@@ -47,7 +47,7 @@ const DashboardStats = (props) => (
                 <div className="card text-white bg-danger mb-3">
                     <div className="card-body">
                         <h2 className="card-title">{
-                            props.stats && props.stats.entries && props.stats.scanned !== 0 ? `${Math.round((props.stats.scanned / props.stats.entries * 10000))/100}%` : '--'
+                            (props.stats && props.stats.hasOwnProperty('scanned') && props.stats.entries != 0) ? `${Math.round((props.stats.scanned / props.stats.entries * 10000))/100}%` : '--'
                         }</h2>
                         <p className="card-text">Rapporto presenze/prenotazioni</p>
                     </div>

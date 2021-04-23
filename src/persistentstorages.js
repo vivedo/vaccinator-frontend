@@ -1,8 +1,11 @@
-import {useState} from "react";
+/*
+ * Derived from https://usehooks.com/useLocalStorage/
+ * Syncs useState React hook with localStorage and sessionStorage so it will persist after a page refresh
+ */
+import {useState} from "react"
 
 export function useLocalStorage(key, initialValue) {
     return usePersistentStorage(key, initialValue, window.localStorage)
-
 }
 
 export function useSessionStorage(key, initialValue) {
@@ -12,22 +15,22 @@ export function useSessionStorage(key, initialValue) {
 function usePersistentStorage(key, initialValue, storage) {
     const [storedValue, setStoredValue] = useState(() => {
         try {
-            const item = storage.getItem(key);
-            return item ? JSON.parse(item) : initialValue;
+            const item = storage.getItem(key)
+            return item ? JSON.parse(item) : initialValue
         } catch (error) {
-            console.log(error);
-            return initialValue;
+            console.log(error)
+            return initialValue
         }
-    });
+    })
     const setValue = (value) => {
         try {
             const valueToStore =
-                value instanceof Function ? value(storedValue) : value;
-            setStoredValue(valueToStore);
-            storage.setItem(key, JSON.stringify(valueToStore));
+                value instanceof Function ? value(storedValue) : value
+            setStoredValue(valueToStore)
+            storage.setItem(key, JSON.stringify(valueToStore))
         } catch (error) {
-            console.log(error);
+            console.log(error)
         }
-    };
-    return [storedValue, setValue];
+    }
+    return [storedValue, setValue]
 }

@@ -1,9 +1,10 @@
 import React, {useState} from 'react';
 import './UploadPage.scss';
-import globals from "../../globals";
 import {Link} from "react-router-dom";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
+import {uploadReport} from "../../services/reportService";
+import {useAuth} from "../../auth";
 
 
 const UploadPage = () => {
@@ -13,6 +14,8 @@ const UploadPage = () => {
     const [formListing, setFormListing] = useState(null)
     const [formReport, setFormReport] = useState(null)
 
+    const auth = useAuth()
+
     const doUpload = (event) => {
         event.preventDefault()
         const data = new FormData(event.target)
@@ -20,11 +23,8 @@ const UploadPage = () => {
         setDone(null)
         setLoading(true);
 
-        fetch(`${globals.API_URL}/upload-report`, {
-            method: 'POST',
-            body: data
-        })
-            .then(res => res.json())
+        // TODO: move error parsing into service
+        uploadReport(data, auth)
             .then(res => {
                 if(res.status) {
                     event.target.reset()

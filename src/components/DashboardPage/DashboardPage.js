@@ -2,11 +2,13 @@ import React, {useEffect, useState} from 'react'
 import './DashboardPage.scss'
 import {Link} from "react-router-dom";
 import DashboardStats from "../DashboardStats/DashboardStats";
-import globals from "../../globals";
+import {getListingsAndStats} from "../../services/listingsService";
+import {useAuth} from "../../auth";
 
 const DashboardPage = () => {
     const [stats, setStats] = useState() // {listings: 0, entries: 0, scanned: 0}
     const [listings, setListings] = useState([])
+    const auth = useAuth()
 
     useEffect(() => {
         loadDashboardData()
@@ -43,23 +45,13 @@ const DashboardPage = () => {
     )
 
     function loadDashboardData() {
-        fetch(`${globals.API_URL}/listings`)
-            .then(res => res.json())
+        getListingsAndStats(auth)
             .then(res => {
-                if(res.status) {
-                    setListings(res.data.map(l => ({
-                        ...l,
-                        insertion_date: new Date(l.insertion_date)
-                    })))
-                }
+                setListings(res.listings)
+                setStats(res.stats)
             })
-
-        fetch(`${globals.API_URL}/listings/stats`)
-            .then(res => res.json())
-            .then(res => {
-                if(res.status) {
-                    setStats(res.data)
-                }
+            .catch(err => {
+                // TODO: handle errors
             })
     }
 }

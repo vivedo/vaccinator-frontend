@@ -10,12 +10,11 @@ services:
         networks:
             - web
         command: > # installing dependencies one folder up to keep them in the container and out of the host volume
-            sh -c "cd .. && cp app/package.json . && cp app/package-lock.json . &&
-                             npm i && cd app/ &&
-                             npm run build"
+            sh -c "npm i && npm run build"
 
     frontend:
         image: nginx:alpine
+        restart: unless-stopped
         expose:
             - 80
         volumes:

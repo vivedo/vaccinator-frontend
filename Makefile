@@ -3,6 +3,7 @@ PROJECT_NAME="vaccinator_frontend"
 COMPOSE=docker-compose --project-name=$(PROJECT_NAME) -f docker/docker-compose.yml
 DEVCOMPOSE=$(COMPOSE) -f docker/docker-compose.dev.yml
 PRODCOMPOSE=$(COMPOSE) -f docker/docker-compose.prod.yml
+BUILDCOMPOSE=$(COMPOSE) -f docker/docker-compose.build.yml
 
 ###############
 # PRODCOMPOSE #
@@ -55,6 +56,22 @@ devupbuild:
 .PHONY: devrm
 devrm:
 	$(DEVCOMPOSE) rm
+
+##############
+# BUILDCOMPOSE #
+##############
+
+.PHONY: buildup
+buildup:
+	$(BUILDCOMPOSE) up
+
+.PHONY: buildupd
+buildupd:
+	$(BUILDCOMPOSE) up -d
+
+.PHONY: builddown
+builddown:
+	$(BUILDCOMPOSE) down
 
 #############
 #   EXECs   #

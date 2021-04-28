@@ -1,17 +1,6 @@
 version: "3.7"
 
 services:
-    frontend-build:
-        build: ../
-        volumes:
-            - ../:/usr/src/app
-            - build:/usr/src/app/build
-            - nm:/usr/src/app/node_modules
-        networks:
-            - web
-        command: > # installing dependencies one folder up to keep them in the container and out of the host volume
-            sh -c "npm i && npm run build"
-
     frontend:
         image: nginx:alpine
         restart: unless-stopped
@@ -22,14 +11,9 @@ services:
             - ../.nginx/nginx.conf:/etc/nginx/nginx.conf
         networks:
             - web
-        labels:
-            - "traefik.enable=true"
-            - "traefik.network=web"
-            - "traefik.http.routers.frontend.rule=Host(`vaccini.vivedo.me`)"
 
 volumes:
     build:
-    nm:
 
 networks:
     web:

@@ -6,10 +6,12 @@ import LoginPage from "./components/LoginPage/LoginPage";
 import DashboardPage from "./components/DashboardPage/DashboardPage";
 import UploadPage from "./components/UploadPage/UploadPage";
 import ListPage from "./components/ListPage/ListPage";
+import BetaBadge from "./components/BetaBadge/BetaBadge";
 
 export default function AuthExample() {
     return (
         <ProvideAuth>
+            <BetaBadge/>
             <Router>
                 <div>
                     <AuthenticatedComponent>

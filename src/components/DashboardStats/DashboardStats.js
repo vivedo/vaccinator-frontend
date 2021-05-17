@@ -49,7 +49,7 @@ const DashboardStats = (props) => (
                         <h2 className="card-title">{
                             (props.stats && props.stats.hasOwnProperty('scanned') && props.stats.entries != 0) ? `${Math.round((props.stats.scanned / props.stats.entries * 10000))/100}%` : '--'
                         }</h2>
-                        <p className="card-text">Rapporto presenze/prenotazioni</p>
+                        <p className="card-text">Presenze/prenotazioni</p>
                     </div>
                 </div>
             </div>

@@ -3,6 +3,8 @@ import './LoginPage.scss'
 import {useHistory} from "react-router-dom"
 import {useAuth} from "../../auth"
 import HFNLogo from './hfn.png'
+import ANPASLogo from './anpas.svg'
+import VELogo from './ve.svg'
 
 const LoginPage = () => {
     const history = useHistory()
@@ -31,7 +33,8 @@ const LoginPage = () => {
                     <div className="login-form">
 
                         <header>
-                            <img src={HFNLogo} alt="Humanitas Firenze Nord" className="logo"/>
+                            {/* <img src={HFNLogo} alt="Humanitas Firenze Nord" className="logo"/> */}
+                            <img src={ANPASLogo} alt="ANPAS Toscana" className="logo"/>
                             <h3>Portale Vaccinazioni</h3>
                         </header>
 
@@ -48,6 +51,11 @@ const LoginPage = () => {
                             </div>
                             <button className="btn btn-primary">Login</button>
                         </form>
+
+                        <footer>
+                            Developed by
+                            <img src={VELogo} alt="Developed by vivedo" className="ve"/>
+                        </footer>
                     </div>
 
                     {loginErrorCode === 'NETWORK_ERROR' && (

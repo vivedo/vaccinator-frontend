@@ -34,7 +34,7 @@ const LoginPage = () => {
 
                         <header>
                             {/* <img src={HFNLogo} alt="Humanitas Firenze Nord" className="logo"/> */}
-                            <img src={ANPASLogo} alt="ANPAS Toscana" className="logo"/>
+                            <img src={HFNLogo} alt="Humanitas Firenze Nord" className="logo"/>
                             <h3>Portale Vaccinazioni</h3>
                         </header>
 

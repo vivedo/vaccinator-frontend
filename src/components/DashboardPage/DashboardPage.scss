@@ -18,6 +18,13 @@
       small {
         margin-left: 5px;
         font-style: italic;
+        font-weight: lighter;
+        opacity: .5;
+        font-size: 14px;
+
+        svg {
+          font-size: smaller;
+        }
       }
 
       &:hover {

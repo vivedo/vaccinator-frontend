@@ -5,7 +5,7 @@ const DashboardStats = (props) => (
     <div className="DashboardStats">
         <div className="row">
             {props.showListings && (
-                <div className="col">
+                <div className="col col-xs-12 col-md-3">
                     <div className="card text-white bg-primary mb-3">
                         <div className="card-body">
                             <h2 className="card-title">{props.stats && props.stats.hasOwnProperty('listings') ? props.stats.listings : '--'}</h2>
@@ -14,7 +14,7 @@ const DashboardStats = (props) => (
                     </div>
                 </div>
             )}
-            <div className="col">
+            <div className="col col-12 col-md-3">
                 <div className="card text-white bg-warning mb-3">
                     <div className="card-body">
                         <h2 className="card-title">{props.stats && props.stats.hasOwnProperty('entries') ? props.stats.entries : '--'}</h2>
@@ -22,7 +22,7 @@ const DashboardStats = (props) => (
                     </div>
                 </div>
             </div>
-            <div className="col">
+            <div className="col col-12 col-md-3">
                 <div className="card text-white bg-success mb-3">
                     <div className="card-body">
                         <h2 className="card-title">{props.stats && props.stats.hasOwnProperty('scanned') ? props.stats.scanned : '--'}</h2>
@@ -31,7 +31,7 @@ const DashboardStats = (props) => (
                 </div>
             </div>
             {props.showRemaining && (
-                <div className="col">
+                <div className="col col-12 col-md-3">
                     <div className="card text-white bg-info mb-3">
                         <div className="card-body">
                             <h2 className="card-title">
@@ -43,7 +43,7 @@ const DashboardStats = (props) => (
                     </div>
                 </div>
             )}
-            <div className="col">
+            <div className="col col-12 col-md-3">
                 <div className="card text-white bg-danger mb-3">
                     <div className="card-body">
                         <h2 className="card-title">{

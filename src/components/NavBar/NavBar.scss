@@ -1,3 +1,17 @@
 .NavBar {
   margin-bottom: 20px;
+
+  .navbar-toggler {
+    border: none;
+
+    svg {
+      transition: all 250ms ease-in-out;
+
+      transform: rotate(135deg);
+    }
+
+    &.c svg {
+      transform: rotate(-45deg);
+    }
+  }
 }

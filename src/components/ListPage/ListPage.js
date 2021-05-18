@@ -3,7 +3,7 @@ import './ListPage.scss'
 import {useParams} from "react-router"
 import DashboardStats from "../DashboardStats/DashboardStats";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import { faCheck, faSpinner } from '@fortawesome/free-solid-svg-icons'
+import {faCheck, faUpload, faSyringe} from '@fortawesome/free-solid-svg-icons'
 import KeyboardScanner from "../KeyboardScanner/KeyboardScanner";
 import {getListing} from "../../services/listingsService";
 import {useAuth} from "../../auth";
@@ -21,6 +21,13 @@ const ListPage = () => {
         loadEntriesData()
     }, [id])
 
+    const def = (text, alt = '-') => text ? text : alt
+    const parseDDMMYYYDate = (string) => {
+        const [day, time] = string.split(' ')
+        const [date, month, year] = day.split('/')
+        return new Date(`${year}/${month}/${date} ${time}`) // get from date without timestamp
+    }
+
     function loadListData() {
         getListing(id, auth)
             .then(res => setList(res))
@@ -29,7 +36,14 @@ const ListPage = () => {
     function loadEntriesData() {
         setLoadingEntries(true)
         getEntries(id, auth)
-            .then(res => setEntries(res))
+            .then(res => {
+
+                try {
+                    res.sort((a, b) => parseDDMMYYYDate(a.entry_date) < parseDDMMYYYDate(b.entry_date))
+                } catch(err) {}
+
+                setEntries(res)
+            })
             .catch(err => {
                 console.log(err)
                 // TODO: handle errors
@@ -51,7 +65,6 @@ const ListPage = () => {
             })
     }
 
-
     return (
         <div className="ListPage">
             <KeyboardScanner entries={entries} onConfirm={confirmCode}/>
@@ -61,7 +74,7 @@ const ListPage = () => {
                     <div>
                         <h1>
                             {list.listing_name}
-                            <small>Inserita in data {list.insertion_date.getDate()}/{list.insertion_date.getMonth()+1}/{list.insertion_date.getFullYear()}</small>
+                            <small><FontAwesomeIcon icon={faUpload}/> {list.insertion_date.getDate()}/{list.insertion_date.getMonth()+1}/{list.insertion_date.getFullYear()}</small>
                         </h1>
                     </div>
                 )}
@@ -87,13 +100,13 @@ const ListPage = () => {
                         <tbody>
                         {entries.map((entry, key) => (
                             <tr key={key} className={ entry.scanned ? 'table-success' : '' }>
-                                <td>{entry.entry_date}</td>
-                                <td className="text-monospace">{entry.code}</td>
-                                <td>{entry.name}</td>
-                                <td className="text-monospace">{entry.fc}</td>
-                                <td className="text-monospace">{entry.phone}</td>
-                                <td className="text-center">
-                                    {entry.scanned ? (<FontAwesomeIcon icon={faCheck} />) : ''}
+                                <td data-label="Data e Ora">{def(entry.entry_date)}</td>
+                                <td data-label="Codice" className="text-monospace">{def(entry.code)}</td>
+                                <td data-label="Nome">{def(entry.name)}</td>
+                                <td data-label="CF" className="text-monospace">{def(entry.fc)}</td>
+                                <td data-label="Telefono" className="text-monospace">{def(entry.phone)}</td>
+                                <td data-label="Presenza" className="text-center">
+                                    {entry.scanned ? (<FontAwesomeIcon icon={faCheck} />) : '-'}
                                 </td>
                             </tr>
                         ))}
@@ -102,7 +115,7 @@ const ListPage = () => {
 
                     {loadingEntries && (
                         <div className="loading">
-                            <FontAwesomeIcon icon={faSpinner} pulse />
+                            <FontAwesomeIcon icon={faSyringe} spin />
                             <span>Carico...</span>
                         </div>
                     )}

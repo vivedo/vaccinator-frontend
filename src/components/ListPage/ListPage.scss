@@ -8,6 +8,11 @@
       font-style: italic;
       font-weight: lighter;
       font-size: 18px;
+      opacity: .5;
+
+      svg {
+        font-size: smaller;
+      }
     }
   }
 
@@ -15,6 +20,36 @@
     display: inline-block;
     span {
       margin-left: 10px;
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    table thead {
+      display: none;
+    }
+
+    table tr {
+      border: 1px solid #ddd;
+      display: block;
+      margin-top: 20px;
+    }
+
+    table td {
+      border-bottom: 1px solid #ddd;
+      display: block;
+      font-size: .8em;
+      text-align: right !important;
+    }
+
+    table td::before {
+      content: attr(data-label);
+      float: left;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+
+    table td:last-child {
+      border-bottom: 0;
     }
   }
 }

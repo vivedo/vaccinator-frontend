@@ -6,7 +6,7 @@ const KeyboardScanner = (props) => {
     const [displayModal, setDisplayModal] = useState(false)
     const [entry, setEntry] = useState(null)
     const [code, _setCode] = useState('')
-    const codeRef = useRef(code);
+    const codeRef = useRef(code)
 
     function setCode(code) {
         if(code.length > 16)

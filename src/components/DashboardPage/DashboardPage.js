@@ -4,6 +4,8 @@ import {Link} from "react-router-dom";
 import DashboardStats from "../DashboardStats/DashboardStats";
 import {getListingsAndStats} from "../../services/listingsService";
 import {useAuth} from "../../auth";
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import { faUpload } from '@fortawesome/free-solid-svg-icons'
 
 const DashboardPage = () => {
     const [stats, setStats] = useState() // {listings: 0, entries: 0, scanned: 0}
@@ -28,7 +30,7 @@ const DashboardPage = () => {
                         <li key={key}>
                             <Link to={`/list/${listing.listing_id}`}>
                             {listing.listing_name}
-                            <small>Inserita in data {listing.insertion_date.getDate()}/{listing.insertion_date.getMonth()+1}/{listing.insertion_date.getFullYear()}</small>
+                            <small><FontAwesomeIcon icon={faUpload}/> {listing.insertion_date.getDate()}/{listing.insertion_date.getMonth()+1}/{listing.insertion_date.getFullYear()}</small>
                             </Link>
                         </li>
                     ))}
